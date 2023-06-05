@@ -94,6 +94,22 @@ export async function generateOTP(username){
     }
 }
 
+export async function generateFOTP(username){
+    try {
+        const {data : { code }, status } = await axios.get('/api/generateOTP', { params : { username }});
+
+        // send mail with the OTP
+        if(status === 201){
+            let { data : { email }} = await getUser({ username });
+            let text = `Your Verification OTP is ${code}.`;
+            await axios.post('/api/registerMail', { username, userEmail: email, text, subject : "Verification OTP"})
+        }
+        return Promise.resolve(code);
+    } catch (error) {
+        return Promise.reject({ error });
+    }
+}
+
 /** verify OTP */
 export async function verifyOTP({ username, code }){
     try {

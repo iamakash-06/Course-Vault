@@ -22,8 +22,10 @@
 }
 
 .btn:hover{
-    background-color: #ff6a6a;
+    background-color: #4f46e5;
 }
+
+
 
 input[type='file']{
     display: none;

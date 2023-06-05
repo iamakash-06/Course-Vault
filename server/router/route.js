@@ -5,6 +5,13 @@ const router = Router();
 import * as controller from '../controllers/appController.js';
 import { registerMail } from '../controllers/mailer.js'
 import Auth, { localVariables } from '../middleware/auth.js';
+import * as feedbackController from '../controllers/feedbackController.js';
+
+// Create feedback
+router.post('/', feedbackController.createFeedback);
+
+// Get all feedback for a specific teacher
+router.get('/teacher/:teacherId', feedbackController.getFeedbackByTeacher);
 
 
 
@@ -13,7 +20,6 @@ router.route('/register').post(controller.register); // register user
 router.route('/registerMail').post(registerMail); // send the email
 router.route('/authenticate').post(controller.verifyUser, (req, res) => res.end()); // authenticate user
 router.route('/login').post(controller.verifyUser,controller.login); // login in app
-
 /** GET Methods */
 router.route('/user/:username').get(controller.getUser) // user with username
 router.route('/generateOTP').get(controller.verifyUser, localVariables, controller.generateOTP) // generate random OTP
